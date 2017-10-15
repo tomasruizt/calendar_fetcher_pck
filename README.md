@@ -2,7 +2,7 @@
 Fetch information from your Google Calendar
 
 ## Installation
-```
+```shell
 git clone https://github.com/tomasruizt/calendar_fetcher_pckg
 cd calendar_fetcher_pckg
 pip install .
@@ -27,6 +27,6 @@ for e in events:
 
 ```
 ## Uninstalling
-```
-calendar_fetcher_pckg
+```shell
+pip uninstall calendar_fetcher_pckg
 ```
