@@ -23,13 +23,13 @@ def augment_with_duration(input_dict):
     ).seconds / 60
 
 
-def pre_process(raw_events, useful_summaries_abspath):
+def pre_process(raw_events, names):
     """
     This functions takes raw_events as returned by the GoogleCalendarService.get_events()
     and parses them into a clean form for further analysis. It uses a file to indicate it
     what event summaries to keep, and which to discard.
     :param raw_events: The result of the GoogleCalendarService.get_events() call.
-    :param useful_summaries_abspath: An absolute filepath of a file containing the summaries to keep.
+    :param names: A set containing the summaries to keep.
     :return: The events processed for further analysis.
     """
     events_with_durations = []
@@ -41,15 +41,10 @@ def pre_process(raw_events, useful_summaries_abspath):
         except KeyError:
             pass
 
-    with open(useful_summaries_abspath, 'r') as file:
-        names = {line.strip(): line.strip() for line in file}
-
     canonical_events = []
     for event in events_with_durations:
-        try:
-            valid_name = names[event['summary'].lower().split()[0]]
-            event['summary'] = valid_name
+        short_name = event['summary'].lower().split()[0]
+        if short_name in names:
+            event['summary'] = short_name
             canonical_events.append(event)
-        except KeyError:
-            pass
     return canonical_events
