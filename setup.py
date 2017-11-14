@@ -13,5 +13,6 @@ setup(
     zip_safe=False,
     install_requires=[
         'google-api-python-client',
+        'httplib2'
     ],
 )
